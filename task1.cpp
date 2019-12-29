@@ -51,15 +51,15 @@ int get_min(int* line, int m, bool is_par)
 int get_max(int** arr, int n, int m, bool is_par)
 {
 	int* min_of_lines = new int[n];
-	#pragma omp parallel if(is_par)
+#pragma omp parallel if(is_par)
 	{
-		#pragma omp for
+#pragma omp for
 		for (int i = 0; i < n; i++)
 			min_of_lines[i] = get_min(arr[i], m, is_par);
 	}
 
 	int max = min_of_lines[0];
-	#pragma omp parallel for 
+#pragma omp parallel for 
 	for (int i = 1; i < n; i++)
 		if (min_of_lines[i] > max)
 			max = min_of_lines[i];
