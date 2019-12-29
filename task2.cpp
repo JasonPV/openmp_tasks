@@ -43,7 +43,7 @@ int main()
 	cout << "time = " << chrono::duration_cast<chrono::microseconds>(end1 - start1).count()<< endl;
 	print_arr(result1, n, k);
 
-	cout << "multy threads: " << endl;
+	cout << "multy thread: " << endl;
 	cout << "time = " << chrono::duration_cast<chrono::microseconds>(end2 - start2).count() << endl;
 	print_arr(result2, n, k);
 
