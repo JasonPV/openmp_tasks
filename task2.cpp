@@ -78,7 +78,7 @@ int** multiplication_multy(int** arr1, int** arr2, int n, int m, int k)
 		result[i] = new int[k];
 	omp_set_num_threads(4);
 	int i, j, s;
-	#pragma omp parallel for shared(arr1, arr2, result) private(i, j, s) 
+#pragma omp parallel for shared(arr1, arr2, result) private(i, j, s) 
 	for (i = 0; i < n; i++)
 	{
 		for (j = 0; j < k; j++)
