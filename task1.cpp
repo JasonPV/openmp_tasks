@@ -11,31 +11,28 @@ int get_max(int** arr, int n, int m, bool is_par);
 int main()
 { 
 	srand(time(0));
-	// выбираем размер матрицы
 	const int n = 1000;
 	const int m = 10000;
 	int** arr = new int* [n];
 	for (int i = 0; i < n; i++)
 		arr[i] = new int[m];
 
-	// рандомное заполнение матрицы
+
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < m; j++)
 			arr[i][j] = rand() % 1000;
 	
-	// время для 1 потока
 	auto start1 = std::chrono::system_clock::now();
 	int result1 = get_max(arr, n, m, false);
 	auto end1 = std::chrono::system_clock::now();
 
-	//время для нескольких потоков
 	auto start2 = std::chrono::system_clock::now();
 	int result2 = get_max(arr, n, m, true);
 	auto end2 = std::chrono::system_clock::now();
 
 
 	cout << "For single thread:" << endl << "result = " << result1 << endl << "time = " << chrono::duration_cast<chrono::microseconds>(end1 - start1).count() << endl;
-	cout << "For multy threads:" << endl << "result = " << result2 << endl << "time = " << chrono::duration_cast<chrono::microseconds>(end2 - start2).count() << endl;
+	cout << "For multy thread:" << endl << "result = " << result2 << endl << "time = " << chrono::duration_cast<chrono::microseconds>(end2 - start2).count() << endl;
 	return 0;
 }
 
