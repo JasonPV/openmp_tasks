@@ -132,5 +132,5 @@ int* mult(int** arr, int* vec, int n, int m)
 			result[i] += arr[i][j] * vec[j];
 		}
 	}
-	return nullptr;
+	return result;
 }
