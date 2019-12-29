@@ -117,8 +117,6 @@ int* mult_block(int** arr, int* vec, int n, int m, int threads_num)
 		}
 	}
 	return result;
-	
-	return nullptr;
 }
 
 int* mult(int** arr, int* vec, int n, int m)
