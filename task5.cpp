@@ -69,12 +69,12 @@ vector<int> search_substring(string str, string substr, bool is_parallel)
 				k++;
 			}
 #pragma omp critical (push_back)
-	{
-			if (k == substr.length())
 			{
-				result.push_back(i);
+					if (k == substr.length())
+					{
+						result.push_back(i);
+					}
 			}
-	}
 		}
 	}
 	return result;
