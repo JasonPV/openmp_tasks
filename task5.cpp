@@ -1,11 +1,12 @@
 #include <iostream>
 #include <chrono>
 #include <fstream>
+#include <vector>
 #include <omp.h>
 
 using namespace std;
 
-int search_substring(string str, string substr, bool is_parallel);
+vector<int> search_substring(string str, string substr, bool is_parallel);
 
 int main()
 {
@@ -23,24 +24,38 @@ int main()
 	
 
 	auto start1 = std::chrono::system_clock::now();
-	int result1 = search_substring(str, substr, false);
+	vector<int> result1 = search_substring(str, substr, false);
 	auto end1 = std::chrono::system_clock::now();
 
 	auto start2 = std::chrono::system_clock::now();
-	int result2 = search_substring(str, substr, true);
+	vector<int> result2 = search_substring(str, substr, true);
 	auto end2 = std::chrono::system_clock::now();
 
 	cout << "for single: " << endl;
-	cout << "result = " << result1 << endl << "time = " << chrono::duration_cast<chrono::microseconds>(end1 - start1).count() << endl;
+	cout << "result = " << endl;
+	if (result1.empty())
+		cout << "Substring not found" << endl;
+	else
+		for (int i = 0; i < result1.size(); i++)
+			cout << result1[i] << " ";
+	cout << endl;
+	cout << "time = " << chrono::duration_cast<chrono::microseconds>(end1 - start1).count() << endl;
 
 	cout << "for multy: " << endl;
-	cout << "result = " << result2 << endl << "time = " << chrono::duration_cast<chrono::microseconds>(end2 - start2).count() << endl;
+	cout << "result = " << endl;
+	if (result2.empty())
+		cout << "Substring not found" << endl;
+	else
+		for (int i = 0; i < result2.size(); i++)
+			cout << result2[i] << " ";
+	cout << endl;
+	cout << "time = " << chrono::duration_cast<chrono::microseconds>(end2 - start2).count() << endl;
 	return 0;
 }
 
-int search_substring(string str, string substr, bool is_parallel)
+vector<int> search_substring(string str, string substr, bool is_parallel)
 {
-	int result= -1;
+	vector<int> result;
 #pragma omp parallel shared(str, substr) if(is_parallel)
 	{
 #pragma omp for
@@ -53,10 +68,13 @@ int search_substring(string str, string substr, bool is_parallel)
 					break;
 				k++;
 			}
+#pragma omp critical (push_back)
+	{
 			if (k == substr.length())
 			{
-				result = i;
+				result.push_back(i);
 			}
+	}
 		}
 	}
 	return result;
